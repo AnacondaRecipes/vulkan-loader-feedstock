@@ -1,0 +1,61 @@
+{% set version = "1.4.313.0" %}
+
+package:
+  name: libvulkan-loader
+  version: {{ version }}
+
+# For this repo, v**** tags exists, but apparently the stable tags (the one corresponding to versions
+# that are available for download at https://vulkan.lunarg.com/sdk/home) are the vulkan-sdk-*** ones
+# See https://github.com/KhronosGroup/Vulkan-Headers#version-tagging-scheme
+source:
+  url: https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/vulkan-sdk-{{ version }}.tar.gz
+  sha256: c736fa79d974c3513f5573b74249ed002aab59f1d15d1c13fc1d00644830869a
+  patches:
+    - disable_macos_framework.patch
+
+build:
+  number: 0
+  ignore_run_exports_from:
+    # only the headers are used by the feedstock
+    - libxcb  # [linux]
+
+requirements:
+  build:
+    - {{ stdlib("c") }}
+    - {{ compiler('cxx') }}
+    - cmake
+    - ninja
+    - python
+    - pkg-config
+  host:
+    - libvulkan-headers ={{ version }}
+    - libxcb {{ libxcb }}                  # [linux]
+    - xorg-libx11 {{ xorg_libx11 }}        # [linux]
+    - xorg-libxrandr {{ xorg_libxrandr }}  # [linux]
+    - xorg-xorgproto {{ xorg_xorgproto }}  # [linux]
+  run_constraints:
+    - libvulkan-headers ={{ version }}
+
+test:
+  commands:
+    - test ! -f $PREFIX/lib/vulkan.${SHLIB_EXT}        # [not win]
+    - if not exist %LIBRARY_BIN%\\vulkan-1.dll exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\\vulkan-1.lib exit 1  # [win]
+
+about:
+  home: https://www.lunarg.com/vulkan-sdk
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE.txt
+  summary: Khronos official Vulkan ICD desktop loader for Windows, Linux, and MacOS.
+  description: "The Vulkan SDK includes the Khronos‐branded Vulkan loader binary for Linux and macOS. On Windows, the
+   Vulkan Loader is delivered with the hardware vendor driver update packages. The loader discovers and manages the
+   Vulkan devices and layers available to the application."
+  doc_url: https://www.lunarg.com/vulkan-sdk
+  dev_url: https://github.com/KhronosGroup/Vulkan-Loader
+
+extra:
+  feedstock-name: vulkan-loader
+  recipe-maintainers:
+    - JarrettSJohnson
+    - traversaro
