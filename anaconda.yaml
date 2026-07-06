@@ -5,3 +5,5 @@ upstream_sources:
       use_max_tag: true
       prefix: vulkan-sdk-
       include_regex: ^vulkan-sdk-\d+\.\d+\.\d+(?:\.\d+)?$
+    packages:
+      - vulkan-loader
