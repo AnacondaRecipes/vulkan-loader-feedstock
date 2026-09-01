@@ -52,7 +52,7 @@ about:
   license_family: Apache
   license_file: LICENSE.txt
   summary: Khronos official Vulkan ICD desktop loader for Windows, Linux, and MacOS.
-  description: "The Vulkan SDK includes the Khronos‐branded Vulkan loader binary for Linux and macOS. On Windows, the
+  description: "The Vulkan SDK includes the Khronos-branded Vulkan loader binary for Linux and macOS. On Windows, the
    Vulkan Loader is delivered with the hardware vendor driver update packages. The loader discovers and manages the
    Vulkan devices and layers available to the application.
   doc_url: https://www.lunarg.com/vulkan-sdk
