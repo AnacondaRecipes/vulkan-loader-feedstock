@@ -59,7 +59,6 @@ about:
   dev_url: https://github.com/KhronosGroup/Vulkan-Loader
 
 extra:
-  feedstock-name: vulkan-loader
   recipe-maintainers:
     - JarrettSJohnson
     - traversaro
